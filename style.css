@@ -1,0 +1,226 @@
+    <style>
+        /* Configure Tailwind for custom colors and Inter font */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    keyframes: {
+                        'slow-pulse': {
+                            '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+                        },
+                        'fast-pulse': {
+                            '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'scale(1.1)' },
+                        },
+                    },
+                    animation: {
+                        'slow-pulse': 'slow-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fast-pulse': 'fast-pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </style>
+    <style>
+
+        html, body {
+            height: 100%;
+            overflow: hidden; 
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #0b1a2e;
+            color: #ecf0f1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+    header {
+
+            background: linear-gradient(90deg, #1E3A8A, #15224e);
+            color: #F3F4F6; /* Soft white text for high contrast */
+            padding: 20px 0;
+            text-align: center;
+            /* Prominent shadow to lift it off the page */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            /* Emergency Red accent line at the bottom */
+            border-bottom: 5px solid #EF4444; 
+            flex-shrink: 0;
+            z-index: 20;
+        }
+
+        header h1 {
+            font-size: 3em; 
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: 1px;
+            /* text-transform: lowercase; */
+            /* Center the text and icon horizontally */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px; /* Space between icon and text */
+        }
+
+        header h1 .icon {
+            /* Bright Red for high-alert visuals */
+            color: #EF4444;
+            font-size: 1.1em; 
+            /* Subtle pulse animation */
+            animation: pulse 1.5s infinite; 
+            display: inline-block;
+        }
+
+        header h3 {
+            font-size: 1.2em;
+            margin: 8px 0 0 0;
+            font-weight: 400;
+            opacity: 0.85; /* Make the subtitle slightly less prominent */
+            letter-spacing: 0.5px;
+        }
+
+        /* Keyframe animation for the alert icon */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 5px #ef4444); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2.2em;
+            }
+            header h3 {
+                font-size: 1em;
+            }
+            header {
+                padding: 15px 0;
+            }
+        }
+        /* Main content container: takes remaining space and centers the card */
+        #app-container {
+            flex-grow: 1; 
+            display: flex;
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            position: relative; 
+            z-index: 10; 
+            padding: 20px; /* Add padding to prevent card hitting edges on mobile */
+        }
+
+        /* ----------------------------------------------------------------- */
+        /* --- SLIDESHOW STYLES (Position Fixed for reliable background) --- */
+        /* ----------------------------------------------------------------- */
+        .slideshow-container {
+            position: fixed; /* FIXED ensures it covers the viewport perfectly */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            overflow: hidden;
+            z-index: 1; /* Place slideshow at the very back */
+        }
+        .mySlides {
+            display: none; 
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        .mySlides img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            filter: brightness(0.3) blur(2px); /* Darken and blur the background */
+            vertical-align: middle;
+        }
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s; 
+        }
+        @keyframes fade {
+            from {opacity: 0.4} 
+            to {opacity: 1}
+        }
+        /* ----------------------------------------------------------------- */
+        
+        /* Styling for the central action card */
+        #sos-card {
+            background-color: #1a2a43; 
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 90vh; 
+            z-index: 10; /* Keep card on top of app-container content */
+            overflow-y: auto; 
+        }
+
+        /* SOS Button, Footer, and Form styles remain the same for functionality and aesthetics */
+        #sosButton {
+            margin: 20px auto 30px;
+            border: 5px solid white; 
+        }
+        
+        .sos-shadow {
+            box-shadow: 0 0 50px rgba(231, 76, 60, 0.9), 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+        #sos-help-button {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .hidden-section {
+            display: none;
+        }
+        .scrolling-footer-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333; 
+            color: #fff; 
+            padding: 10px 0;
+            overflow: hidden; 
+            white-space: nowrap; 
+            z-index: 1000; 
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .scrolling-content-inner {
+            display: flex;
+            transition: transform 1.2s linear; 
+        }
+
+        .scrolling-item {
+            display: inline-block;
+            padding: 0 40px; 
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        main h1 {
+            /* margin-top: 0px; */
+            padding: 20px;
+            text-align: center;
+            font-size: 4em;
+            font-family:'Times New Roman', Times, serif;
+            color: rgb(253, 250, 250);
+        }
+    </style>
